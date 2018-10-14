@@ -48,3 +48,12 @@ class EngineGenericObjectApi:
             return response["result"]
         except KeyError:
             return response["error"]
+
+    def expand_left(self, handle, path="/qHyperCubeDef", row=0, col=0, all=True):
+        msg = json.dumps({"jsonrpc": "2.0", "id": 0, "handle": handle, "method": "ExpandLeft",
+                          "params": [path, row, col, all]})
+        response = json.loads(self.engine_socket.send_call(self.engine_socket, msg))
+        try:
+            return response["result"]
+        except KeyError:
+            return response["error"]
