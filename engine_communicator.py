@@ -14,7 +14,8 @@ class EngineCommunicator:
     def send_call(self, call_msg):
         self.ws.send(call_msg)
 
-        # Qlik sometimes returns more than one json response for a sinclu request -- perhaps should use an async socker?
+        # Qlik sometimes returns more than one json response for a single request -- perhaps should use an async socket.
+        # Might be needed to append all responses to returned data in a future review
         while True:
             data = self.ws.recv()
             if ('result' in data or 'error' in data):
