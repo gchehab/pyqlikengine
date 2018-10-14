@@ -13,7 +13,13 @@ class EngineCommunicator:
     @staticmethod
     def send_call(self, call_msg):
         self.ws.send(call_msg)
-        return self.ws.recv()
+
+        # Qlik sometimes returns more than one json response for a sinclu request -- perhaps should use an async socker?
+        while True:
+            data = self.ws.recv()
+            if ('result' in data or 'error' in data):
+                break
+        return data
 
     @staticmethod
     def close_qvengine_connection(self):
