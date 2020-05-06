@@ -4,11 +4,11 @@ import engine_app_api, engine_communicator, engine_field_api, engine_generic_obj
 class QixEngine:
 
     def __init__(self, url, is_secure=False, proxy_prefix='', user_directory='', user_id='', private_key_path='',
-                 ignore_cert_errors=False):
+                 ignore_cert_errors=False, root_ca=None):
         self.url = url
         if is_secure:
             self.conn = engine_communicator.SecureEngineCommunicator(url, proxy_prefix, user_directory,user_id,
-                                                                    private_key_path, ignore_cert_errors)
+                                                                    private_key_path, ignore_cert_errors, root_ca)
         else:
             self.conn = engine_communicator.EngineCommunicator(url)
         self.ega = engine_global_api.EngineGlobalApi(self.conn)
