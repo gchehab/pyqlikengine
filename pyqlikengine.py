@@ -4,13 +4,14 @@ import engine_app_api, engine_communicator, engine_field_api, engine_generic_obj
 class QixEngine:
 
     def __init__(self, url, is_secure=False, proxy_prefix='', user_directory='', user_id='', private_key_path='',
-                 ignore_cert_errors=False, root_ca=None):
+                 ignore_cert_errors=False, root_ca=None, debug=None):
         self.url = url
         if is_secure:
-            self.conn = engine_communicator.SecureEngineCommunicator(url, proxy_prefix, user_directory,user_id,
-                                                                    private_key_path, ignore_cert_errors, root_ca)
+            self.conn = engine_communicator.SecureEngineCommunicator(senseHost=url, proxyPrefix=proxy_prefix, userDirectory=user_directory,
+                                                                     userId=user_id, privateKeyPath=private_key_path, ignoreCertErrors=ignore_cert_errors, 
+                                                                     rootCA=root_ca, debug=debug)
         else:
-            self.conn = engine_communicator.EngineCommunicator(url)
+            self.conn = engine_communicator.EngineCommunicator(url, debug=debug)
         self.ega = engine_global_api.EngineGlobalApi(self.conn)
         self.eaa = engine_app_api.EngineAppApi(self.conn)
         self.egoa = engine_generic_object_api.EngineGenericObjectApi(self.conn)
